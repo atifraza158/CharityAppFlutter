@@ -95,8 +95,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             color: AppColors.themeColor,
                           ),
                         ),
-                        title: Text('Rs ${ds['amount']}'),
-                        subtitle: Text(ds['charity_post_id']),
+                        subtitle: Text('Rs ${ds['amount']}'),
+                        title: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('Donation')
+                              .doc(ds['charity_post_id'])
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var data = snapshot.data!.data();
+                              print("Data" + '${snapshot.data}');
+                              return Text(data!['charity title']);
+                            } else {
+                              return Text("Loading...");
+                            }
+                          },
+                        ),
                         trailing: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [

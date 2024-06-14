@@ -1,6 +1,6 @@
 import 'package:charity_app/Views/User/history_screen.dart';
 import 'package:charity_app/Views/User/home_screen.dart';
-import 'package:charity_app/Views/User/profile_screen.dart';
+import 'package:charity_app/Views/User/user_profile.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pages = [
     HomeScreen(),
     HistoryScreen(),
-    ProfileScreen(),
+    UserProfile(),
   ];
   @override
   Widget build(BuildContext context) {
