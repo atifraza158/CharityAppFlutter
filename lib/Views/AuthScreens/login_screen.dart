@@ -121,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       }
                     },
+                    maxLines: 1,
                     icon: IconButton(
                       icon: show
                           ? const Icon(Icons.visibility_off)

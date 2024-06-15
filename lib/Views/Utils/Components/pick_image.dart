@@ -9,11 +9,13 @@ class PickImageWidget extends StatefulWidget {
   final File? image;
   final String? imageUrl;
   final VoidCallback onPressed;
+  final String text;
 
   const PickImageWidget({
     Key? key,
     this.image,
     this.imageUrl,
+    required this.text,
     required this.onPressed,
   }) : super(key: key);
 
@@ -56,7 +58,7 @@ class _PickImageWidgetState extends State<PickImageWidget> {
                       children: [
                         Icon(FontAwesomeIcons.plus),
                         Text(
-                          "Pick A Category Image",
+                          widget.text,
                           style: CustomTextStyles.smallGreyColorStyle,
                         ),
                       ],

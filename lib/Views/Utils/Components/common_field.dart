@@ -11,6 +11,7 @@ class CommonTextField extends StatelessWidget {
   final String? Function(String?)? validate;
   final bool obsecureText;
   final int? maxLength;
+  final int? maxLines;
   final List<TextInputFormatter>? inputFormatters;
 
   const CommonTextField({
@@ -22,6 +23,7 @@ class CommonTextField extends StatelessWidget {
     required this.validate,
     required this.obsecureText,
     this.maxLength,
+    this.maxLines,
     this.inputFormatters,
   });
 
@@ -33,6 +35,7 @@ class CommonTextField extends StatelessWidget {
       keyboardType: ketboardType,
       cursorColor: AppColors.themeColor,
       maxLength: maxLength,
+      maxLines: maxLines,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         hintText: hintText,

@@ -139,6 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           }
                         },
+                        maxLines: 1,
                         obsecureText: true,
                         hintText: 'Type pasword here',
                       ),
@@ -161,6 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: "Confirm Password",
                         ketboardType: TextInputType.text,
                         validate: matchPassword,
+                        maxLines: 1,
                       ),
                       const SizedBox(
                         height: 40,
