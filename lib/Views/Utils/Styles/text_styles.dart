@@ -92,6 +92,12 @@ extension CustomTextStyles on TextStyle {
     fontSize: 18,
     color: AppColors.whiteColor,
   );
+  static const TextStyle largeWhiteColorStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontFamily: 'poppins',
+    fontSize: 35,
+    color: AppColors.whiteColor,
+  );
 
   static const TextStyle mediumGreyColorStyle = TextStyle(
     fontWeight: FontWeight.bold,
