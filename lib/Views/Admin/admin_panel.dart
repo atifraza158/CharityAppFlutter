@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../../Controllers/firebase_auth_controller.dart';
 import '../Utils/Styles/app_colors.dart';
 import '../Utils/Styles/text_styles.dart';
+import '../app_text/app_text.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({super.key});
@@ -19,6 +20,7 @@ class AdminPanel extends StatefulWidget {
 class _AdminPanelState extends State<AdminPanel> {
   Stream? donationStream;
   FirestoreController firestoreController = Get.put(FirestoreController());
+  String postID = '';
   getStreamData() async {
     donationStream = await firestoreController.getData('Donation');
     setState(() {});
@@ -61,12 +63,13 @@ class _AdminPanelState extends State<AdminPanel> {
                 snapshot.data.docs.length,
                 (index) {
                   DocumentSnapshot donation = snapshot.data.docs[index];
+                  postID = donation['id'];
                   Timestamp timestamp = donation['timestamp'];
                   DateTime dateTime = timestamp.toDate();
                   // Format the DateTime object to a readable string
                   String formattedDate =
                       DateFormat('yyyy-MM-dd').format(dateTime);
-                  String formattedTime = DateFormat('kk:mm').format(dateTime);
+                  // String formattedTime = DateFormat('kk:mm').format(dateTime);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -92,17 +95,82 @@ class _AdminPanelState extends State<AdminPanel> {
                           donation['charity title'],
                           style: CustomTextStyles.smallBlackColorStyle,
                         ),
-                        trailing: Column(
+                        subtitle: Text(
+                          formattedDate,
+                          style: CustomTextStyles.smallGreyColorStyle,
+                        ),
+                        trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              formattedTime,
-                              style: CustomTextStyles.smallGreyColorStyle,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: AppColors.themeColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 20,
+                                  color: AppColors.whiteColor,
+                                ),
+                                onPressed: () {
+                                  Get.dialog(AlertDialog(
+                                    content: Text(
+                                      "Are you sure you want to delete this?",
+                                    ),
+                                    title: AppText(
+                                      title: "Title",
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Text("No"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          firestoreController
+                                              .deleteData(
+                                            postID,
+                                            'Donation',
+                                          )
+                                              .then((_) {
+                                            Get.back();
+                                            Get.snackbar(
+                                              'Success',
+                                              'Post Deleted Successfully',
+                                            );
+                                          });
+                                        },
+                                        child: Text("Yes"),
+                                      ),
+                                    ],
+                                  ));
+                                },
+                                color: AppColors.themeColor,
+                              ),
                             ),
-                            Text(
-                              formattedDate,
-                              style: CustomTextStyles.smallGreyColorStyle,
-                            )
+                            SizedBox(width: 10),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: AppColors.themeColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 20,
+                                  color: AppColors.whiteColor,
+                                ),
+                                onPressed: () {},
+                                color: AppColors.themeColor,
+                              ),
+                            ),
                           ],
                         ),
                       ),

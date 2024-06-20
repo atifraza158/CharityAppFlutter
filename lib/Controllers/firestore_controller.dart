@@ -29,4 +29,36 @@ class FirestoreController extends GetxController {
       print(e.toString());
     }
   }
+
+  Future deleteData(String id, String collectionName) async {
+    loader.value = true;
+    return await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(id)
+        .delete()
+        .then((_) {
+      loader.value = false;
+    }).onError((error, stackTrace) {
+      loader.value = false;
+      Get.snackbar('error', 'Something went wrong');
+      print(error);
+    });
+  }
+
+  Future UpdateData(
+      String id, Map<String, dynamic> itemDetails, String collection) async {
+    loader.value = true;
+    final docRef = FirebaseFirestore.instance.collection(collection).doc(id);
+    final doc = await docRef.get();
+
+    if (doc.exists) {
+      loader.value = false;
+      return await docRef.update(itemDetails).then((_) {
+        Get.back();
+      });
+    } else {
+      loader.value = false;
+      print('Document does not exist');
+    }
+  }
 }
